@@ -14,7 +14,11 @@ services:
     volumes:
       - ./www/:/app
   php:
-    build: ./bin/php
+    build:
+      context: ./bin/php
+      dockerfile: Dockerfile
+      args:
+        USE_XDEBUG: "${USE_XDEBUG}"
     container_name: "${APP_NAME}_php"
     restart: always
     networks:
@@ -34,7 +38,7 @@ services:
       - ./mysql:/var/lib/mysql
   redis:
     build: ./bin/redis
-    container_name: "${APP_NAME}_redis"
+    container_name: '${APP_NAME}_redis'
     sysctls:
       net.core.somaxconn: 1024
     networks:
